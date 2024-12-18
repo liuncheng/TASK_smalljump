@@ -91,6 +91,25 @@ void Class_TensionMeter::kalman_update() {
 void Class_TensionMeter::Read_Raw_Data(void)
 {
     uint32_t data = 0;
+    // 阻塞等待DT变为低电平（数据准备好）
+    while(READ_DT());
+    for (int i = 0; i < 24; i++) {
+        SCK_HIGH();                // 产生时钟上升沿
+        data = (data << 1) | READ_DT(); // 读取DT引脚电平
+        SCK_LOW();                 // 时钟下降沿
+    }
+
+    // 提供额外的时钟脉冲，选择增益
+    SCK_HIGH();
+    SCK_LOW();
+
+    Raw_Data = data ^ 0x800000; // 如果最高位为负数标志，转化为有符号值
+}
+
+
+void Class_TensionMeter::Read_Raw_Data_FromISR()
+{
+    uint32_t data = 0;
     // 等待DT变为低电平（数据准备好）
     if(!READ_DT()) 
     {

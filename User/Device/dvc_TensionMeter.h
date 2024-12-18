@@ -92,8 +92,11 @@ protected:
     uint32_t init_data_cal;
     uint8_t init_cnt;
 
-    // 读取HX711原始数据
+    // 读取HX711原始数据 中断中调用
+    void Read_Raw_Data_FromISR();
+    // 读取HX711原始数据 阻塞方式
     void Read_Raw_Data();
+    
     // 初始化卡尔曼滤波器
     void kalman_init(float initial_value);
     // 卡尔曼滤波更新函数
