@@ -162,6 +162,10 @@ void Class_PID::TIM_Adjust_PeriodElapsedCallback()
         Math_Constrain(&Out, -Out_Max, Out_Max);
     }
 
+    P_out=p_out;
+    I_out=i_out;
+    D_out=d_out;
+
     //善后工作
     Pre_Now = Now;
     Pre_Target = Target;

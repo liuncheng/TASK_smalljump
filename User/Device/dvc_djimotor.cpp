@@ -585,7 +585,7 @@ void Class_DJI_Motor_C620::Data_Process()
 
     //计算电机本身信息
     Data.Now_Radian = (float)Data.Total_Encoder / (float)Encoder_Num_Per_Round * 2.0f * PI / Gearbox_Rate;
-    Data.Now_Angle = (float)Data.Total_Encoder / (float)Encoder_Num_Per_Round * 360.f / Gearbox_Rate;
+    Data.Now_Angle = (float)Data.Total_Encoder / (float)Encoder_Num_Per_Round * 360.f / Gearbox_Rate-init_angle;
     Data.Now_Omega_Radian = (float)tmp_omega * RPM_TO_RADPS / Gearbox_Rate;
     Data.Now_Omega_Angle = (float)tmp_omega * RPM_TO_DEG / Gearbox_Rate;
     Data.Now_Torque = tmp_torque;
@@ -593,7 +593,11 @@ void Class_DJI_Motor_C620::Data_Process()
 
     //存储预备信息
     Data.Pre_Encoder = tmp_encoder;
-    if(Start_Falg==0)  Start_Falg = 1;
+    if(Start_Falg==0)
+    {
+        init_angle=Data.Now_Angle;
+            Start_Falg = 1;
+    }
 }
 
 /**

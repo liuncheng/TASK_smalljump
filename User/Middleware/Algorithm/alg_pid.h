@@ -114,6 +114,9 @@ protected:
     float Now = 0.0f;
 
     //读写变量
+    float P_out = 0.0f;
+    float I_out = 0.0f;
+    float D_out = 0.0f;
 
     //积分值
     float Integral_Error = 0.0f;

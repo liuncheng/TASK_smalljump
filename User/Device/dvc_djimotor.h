@@ -345,10 +345,13 @@ public:
     inline void Set_Target_Omega_Radian(float __Target_Omega_Radian);
     inline void Set_Target_Torque(float __Target_Torque);
     inline void Set_Out(float __Out);
-
+    void Output();
     void CAN_RxCpltCallback(uint8_t *Rx_Data);
     void TIM_Alive_PeriodElapsedCallback();
     void TIM_PID_PeriodElapsedCallback();
+    //电机对外接口信息
+    Struct_DJI_Motor_Data Data;
+    float init_angle = 0.0f;
 
 protected:
     //初始化相关变量
@@ -384,8 +387,7 @@ protected:
 
     //电机状态
     Enum_DJI_Motor_Status DJI_Motor_Status = DJI_Motor_Status_DISABLE;
-    //电机对外接口信息
-    Struct_DJI_Motor_Data Data;
+
 
     //写变量
 
@@ -409,7 +411,7 @@ protected:
     //内部函数
 
     void Data_Process();
-    void Output();
+   
 };
 
 /* Exported variables --------------------------------------------------------*/
